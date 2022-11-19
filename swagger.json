@@ -7,20 +7,81 @@
 	},
 	"consumes": ["application/json"],
 	"produces": ["application/json"],
-	"servers": [{ "url": "http://localhost:3000" }],
+	"servers": [
+		{ "url": "https://wallet-project.onrender.com/" },
+		{ "url": "http://localhost:3000" }
+	],
 	"tags": [
 		{ "name": "Auth", "description": "Authorization endpoints" },
 		{ "name": "Transactions", "description": "Transactions endpoints" }
 	],
 	"paths": {
 		"/transactions": {
-			"post": { "tags": ["Transactions"] },
-			"summary": "Сreating a transaction",
-			"requestBody": {
-				"desctription": "Registration's object",
-				"required": true,
-				"content": {},
+			"post": {
+				"tags": ["Transactions"],
+				"summary": "Сreating a transaction",
+				"parameters": [],
+				"requestBody": {
+					"description": "Registration's object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TransactionsRegistrationRequest"
+							}
+						}
+					}
+				},
 				"responses": {}
+			}
+		},
+		"/transactions/categories": {
+			"get": {
+				"tags": ["Transactions"],
+				"summary": "Get all transactions",
+				"parameters": []
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"UserRegistrationRequest": {
+				"type": "object",
+				"required": ["email", "password"],
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "User's email",
+						"format": "email"
+					},
+					"password": {
+						"type": "string",
+						"description": "User's password",
+						"example": "qwerty123"
+					}
+				}
+			},
+			"TransactionsRegistrationRequest": {
+				"type": "object",
+				"required": ["type", "category", "comment", "sum"],
+				"properties": {
+					"type": {
+						"type": "string",
+						"description": "Transactions type"
+					},
+					"category": {
+						"type": "string",
+						"description": "Transactions category"
+					},
+					"comment": {
+						"type": "string",
+						"description": "Transactions comment"
+					},
+					"sum": {
+						"type": "number",
+						"description": "Sum of transaction "
+					}
+				}
 			}
 		}
 	}
