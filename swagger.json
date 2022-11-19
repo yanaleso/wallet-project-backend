@@ -2,11 +2,26 @@
 	"openapi": "3.0.1",
 	"info": {
 		"version": "1.0",
-		"title": "Swagger test",
-		"description": "description of the method"
+		"title": "Wallet",
+		"description": "description of the methods"
 	},
 	"consumes": ["application/json"],
 	"produces": ["application/json"],
 	"servers": [{ "url": "http://localhost:3000" }],
-	"tags": [{ "name": "Auth", "description": "Authorization endpoints" }]
+	"tags": [
+		{ "name": "Auth", "description": "Authorization endpoints" },
+		{ "name": "Transactions", "description": "Transactions endpoints" }
+	],
+	"paths": {
+		"/transactions": {
+			"post": { "tags": ["Transactions"] },
+			"summary": "Сreating a transaction",
+			"requestBody": {
+				"desctription": "Registration's object",
+				"required": true,
+				"content": {},
+				"responses": {}
+			}
+		}
+	}
 }
