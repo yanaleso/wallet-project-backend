@@ -1,0 +1,12 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"version": "1.0",
+		"title": "Swagger test",
+		"description": "description of the method"
+	},
+	"consumes": ["application/json"],
+	"produces": ["application/json"],
+	"servers": [{ "url": "http://localhost:3000" }],
+	"tags": [{ "name": "Auth", "description": "Authorization endpoints" }]
+}
