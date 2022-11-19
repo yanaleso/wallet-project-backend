@@ -8,7 +8,7 @@
 	"consumes": ["application/json"],
 	"produces": ["application/json"],
 	"servers": [
-		{ "url": "https://wallet-project.onrender.com/" },
+		{ "url": "https://wallet-project.onrender.com/api" },
 		{ "url": "http://localhost:3000" }
 	],
 	"tags": [
@@ -16,6 +16,52 @@
 		{ "name": "Transactions", "description": "Transactions endpoints" }
 	],
 	"paths": {
+		"/users/signup": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "Signup user",
+				"parameters": [],
+				"requestBody": {
+					"description": "Registration's object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserRegistrationRequest"
+							}
+						}
+					}
+				},
+				"responses": {}
+			}
+		},
+		"/users/login": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "Login user",
+				"parameters": [],
+				"requestBody": {
+					"description": "Registration's object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserLoginRequest"
+							}
+						}
+					}
+				},
+				"responses": {}
+			}
+		},
+		"/users/logout": {
+			"get": {
+				"tags": ["Auth"],
+				"summary": "Logout user",
+				"parameters": [],
+				"responses": {}
+			}
+		},
 		"/transactions": {
 			"post": {
 				"tags": ["Transactions"],
@@ -33,12 +79,19 @@
 					}
 				},
 				"responses": {}
+			},
+			"get": {
+				"tags": ["Transactions"],
+				"summary": "Get user's transactions",
+				"parameters": [],
+
+				"responses": {}
 			}
 		},
 		"/transactions/categories": {
 			"get": {
 				"tags": ["Transactions"],
-				"summary": "Get all transactions",
+				"summary": "Get categories of transactions",
 				"parameters": []
 			}
 		}
@@ -46,6 +99,27 @@
 	"components": {
 		"schemas": {
 			"UserRegistrationRequest": {
+				"type": "object",
+				"required": ["email", "password", "firstName"],
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "User's email",
+						"format": "email"
+					},
+					"password": {
+						"type": "string",
+						"description": "User's password",
+						"example": "qwerty123"
+					},
+
+					"firstName": {
+						"type": "string",
+						"description": "User's first name"
+					}
+				}
+			},
+			"UserLoginRequest": {
 				"type": "object",
 				"required": ["email", "password"],
 				"properties": {
@@ -63,7 +137,7 @@
 			},
 			"TransactionsRegistrationRequest": {
 				"type": "object",
-				"required": ["type", "category", "comment", "sum"],
+				"required": ["type", "category", "sum"],
 				"properties": {
 					"type": {
 						"type": "string",
@@ -73,10 +147,7 @@
 						"type": "string",
 						"description": "Transactions category"
 					},
-					"comment": {
-						"type": "string",
-						"description": "Transactions comment"
-					},
+
 					"sum": {
 						"type": "number",
 						"description": "Sum of transaction "
