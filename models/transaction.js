@@ -16,8 +16,7 @@ const transactionSchema = new Schema(
 		},
 		comment: {
 			type: String,
-			required: [true, "Transaction's comment is required"],
-			// default: "starter",
+			default: "",
 		},
 		sum: {
 			type: Number,
@@ -37,7 +36,7 @@ transactionSchema.post("save", handleSaveErrors);
 const addSchema = Joi.object({
 	type: Joi.string().required(),
 	category: Joi.string().required(),
-	comment: Joi.string().required(),
+	comment: Joi.string(),
 	sum: Joi.number().required(),
 });
 
