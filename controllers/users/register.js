@@ -1,5 +1,6 @@
 const { User } = require("../../models/user");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 
 const { createError } = require("../../helpers");
 
@@ -16,7 +17,17 @@ const register = async (req, res, next) => {
     password: hash,
   });
 
-  res.status(201).json(result.email);
+const payload = {
+    id: result._id,
+  };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "2h" });
+
+await User.findByIdAndUpdate(result._id, { token });
+
+  res.status(201).json({
+    email: result.email,
+    token
+  });
 };
 
 module.exports = register;
