@@ -137,9 +137,9 @@
 			},
 			"TransactionsRegistrationRequest": {
 				"type": "object",
-				"required": ["type", "category", "sum"],
+				"required": ["typeOperation", "category", "typeOperation"],
 				"properties": {
-					"type": {
+					"typeOperation": {
 						"type": "string",
 						"description": "Transactions type"
 					},
@@ -148,7 +148,7 @@
 						"description": "Transactions category"
 					},
 
-					"sum": {
+					"amount": {
 						"type": "number",
 						"description": "Sum of transaction "
 					}
