@@ -4,10 +4,10 @@ const { ObjectId } = require("mongoose").Types;
 const getStatistics = async (req, res, next) => {
 	try {
 		const _id = req.userId;
-		const objID = `ObjectId('${_id}')`;
 		const { month = null, year = null } = req.query;
 		if (month && !year) year = "2022";
-		console.log("id:", ObjectId(_id));
+		const timestamps = new Date(`${year}/${month}/01`);
+		console.log("timestamps:", timestamps);
 
 		const statistics = await Transaction.aggregate().match({
 			owner: ObjectId(_id),
