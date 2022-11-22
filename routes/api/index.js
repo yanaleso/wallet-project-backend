@@ -1,4 +1,4 @@
-const usersRouter = require("./users");
+const authRouter = require("./auth");
 const transactionsRouter = require("./transactions");
 
-module.exports = { usersRouter, transactionsRouter };
+module.exports = { authRouter, transactionsRouter };
