@@ -5,35 +5,37 @@ const { handleSaveErrors } = require("../utils");
 
 const userSchema = new Schema(
 	{
-    email: {
-      type: String,
-      required: [true, "Email is required"],
-      match: [emailRegexp, "Email is invalid"],
-      unique: true,
-    },
-    password: {
-      type: String,
-      minlength: 6,
-      required: [true, "Password is required"],
-    },
-    token: {
-      type: String,
-      default: null,
-    },
-  },
-  { versionKey: false, timestamps: true }
+		email: {
+			type: String,
+			required: [true, "Email is required"],
+			// match: [emailRegexp, "Email is invalid"],
+			unique: true,
+		},
+		password: {
+			type: String,
+			minlength: 6,
+			required: [true, "Password is required"],
+		},
+		token: {
+			type: String,
+			default: null,
+		},
+	},
+	{ versionKey: false, timestamps: true }
 );
 
 userSchema.post("save", handleSaveErrors);
 
 const sigUpInSchema = Joi.object({
-  email: Joi.string().pattern(emailRegexp).required(),
-  password: Joi.string().min(6).required(),
+	email: Joi.string()
+		// .pattern(emailRegexp)
+		.required(),
+	password: Joi.string().min(6).required(),
 });
 
 const schemas = {
-  register: sigUpInSchema,
-  logIn: sigUpInSchema,
+	register: sigUpInSchema,
+	logIn: sigUpInSchema,
 };
 
 const User = model("users", userSchema);

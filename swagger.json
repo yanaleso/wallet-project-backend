@@ -16,7 +16,7 @@
 		{ "name": "Transactions", "description": "Transactions endpoints" }
 	],
 	"paths": {
-		"/users/signup": {
+		"/users/register": {
 			"post": {
 				"tags": ["Auth"],
 				"summary": "Signup user",
