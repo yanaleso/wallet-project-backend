@@ -4,15 +4,25 @@ const { ObjectId } = require("mongoose").Types;
 const getStatistics = async (req, res, next) => {
 	try {
 		const _id = req.userId;
-		const { month = null, year = null } = req.query;
+		let { month = null, year = null } = req.query;
+		if (!month && year) month = 0;
 		if (month && !year) year = "2022";
-		const timestamps = new Date(`${year}/${month}/01`);
-		console.log("timestamps:", timestamps);
+		const timestamps =
+			(month === null) & (year === null)
+				? 0
+				: new Date(year, month, 1, 2).getTime();
+		console.log("timestamps", timestamps);
 
-		const statistics = await Transaction.aggregate().match({
-			owner: ObjectId(_id),
-			// year: { $lt: "2022" },
-		});
+		const statistics = await Transaction.aggregate()
+			.match({
+				owner: ObjectId(_id),
+				timestamps: { $gte: timestamps },
+			})
+			.group({
+				_id: "$category",
+				totalSum: { $sum: "$amount" },
+				type: { $first: "$typeOperation" },
+			});
 		res.json(statistics);
 	} catch (error) {
 		next(error);

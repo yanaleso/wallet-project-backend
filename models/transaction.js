@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
 const { handleSaveErrors } = require("../utils");
+const { string } = require("joi");
 
 const transactionSchema = new Schema(
 	{
@@ -20,17 +21,18 @@ const transactionSchema = new Schema(
 		},
 		date: {
 			type: String,
-			default: new Date(),
+			default: "",
+		},
+		timestamps : {
+			type: Number,
+			default: Number(new Date()),
 		},
 		amount: {
 			type: Number,
 			required: [true, "Sum is required"],
 			// default: null,
 		},
-		date: {
-			type: String,
-			default: null,
-		},
+
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: "user",
