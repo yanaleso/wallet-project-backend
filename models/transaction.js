@@ -5,7 +5,7 @@ const { handleSaveErrors } = require("../utils");
 
 const transactionSchema = new Schema(
 	{
-		type: {
+		typeOperation: {
 			type: String,
 			enum: ["income", "expense"],
 			required: [true, "Transaction's type is required"],
@@ -22,16 +22,12 @@ const transactionSchema = new Schema(
 			type: String,
 			default: new Date(),
 		},
-		sum: {
+		amount: {
 			type: Number,
 			required: [true, "Sum is required"],
 			// default: null,
 		},
-		month: {
-			type: String,
-			default: null,
-		},
-		year: {
+		date: {
 			type: String,
 			default: null,
 		},
@@ -51,7 +47,6 @@ const addSchema = Joi.object({
 	comment: Joi.string(),
 	date: Joi.string(),
 	amount: Joi.number().required(),
-	sum: Joi.number().required(),
 });
 
 const Transaction = model("transactions", transactionSchema);
