@@ -23,7 +23,7 @@ const transactionSchema = new Schema(
 			type: String,
 			default: "",
 		},
-		timestamps : {
+		timestamps: {
 			type: Number,
 			default: Number(new Date()),
 		},
@@ -31,6 +31,10 @@ const transactionSchema = new Schema(
 			type: Number,
 			required: [true, "Sum is required"],
 			// default: null,
+		},
+		balanceAfterTransaction: {
+			type: String,
+			required: [true, "balanceAfterTransaction is required"],
 		},
 
 		owner: {
