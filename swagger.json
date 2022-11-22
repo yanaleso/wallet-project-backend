@@ -16,7 +16,7 @@
 		{ "name": "Transactions", "description": "Transactions endpoints" }
 	],
 	"paths": {
-		"/users/signup": {
+		"/users/register": {
 			"post": {
 				"tags": ["Auth"],
 				"summary": "Signup user",
@@ -165,9 +165,9 @@
 			},
 			"TransactionsRegistrationRequest": {
 				"type": "object",
-				"required": ["type", "category", "sum"],
+				"required": ["typeOperation", "category", "typeOperation"],
 				"properties": {
-					"type": {
+					"typeOperation": {
 						"type": "string",
 						"enum": ["income", "expense"],
 						"description": "Transactions type"
@@ -181,7 +181,7 @@
 						"description": "Transactions comment"
 					},
 
-					"sum": {
+					"amount": {
 						"type": "number",
 						"description": "Sum of transaction "
 					},
