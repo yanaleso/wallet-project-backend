@@ -8,7 +8,7 @@ const add = async (req, res, next) => {
 			...req.body,
 			owner: req.userId,
 		});
-		res.status(201).json(contact);
+		res.status(201).json(transaction);
 	} catch (error) {
 		next(error);
 	}

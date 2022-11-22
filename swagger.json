@@ -9,7 +9,7 @@
 	"produces": ["application/json"],
 	"servers": [
 		{ "url": "https://wallet-project.onrender.com/api" },
-		{ "url": "http://localhost:3000" }
+		{ "url": "http://localhost:3000/api" }
 	],
 	"tags": [
 		{ "name": "Auth", "description": "Authorization endpoints" },
@@ -67,6 +67,7 @@
 				"tags": ["Transactions"],
 				"summary": "Сreating a transaction",
 				"parameters": [],
+				"security": [{ "Bearer": [] }],
 				"requestBody": {
 					"description": "Registration's object",
 					"required": true,
@@ -84,6 +85,7 @@
 				"tags": ["Transactions"],
 				"summary": "Get user's transactions",
 				"parameters": [],
+				"security": [{ "Bearer": [] }],
 
 				"responses": {}
 			}
@@ -93,6 +95,32 @@
 				"tags": ["Transactions"],
 				"summary": "Get categories of transactions",
 				"parameters": []
+			}
+		},
+		"/transactions/statistics": {
+			"get": {
+				"tags": ["Transactions"],
+				"summary": "Get statistics of transactions",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "month",
+						"required": false,
+						"type": "string",
+						"description": "Month of transaction (string 0-11)",
+						"example": "3"
+					},
+					{
+						"in": "query",
+						"name": "year",
+						"required": false,
+						"type": "string",
+						"description": "Year of transaction (string)",
+						"example": "2021"
+					}
+				],
+				"security": [{ "Bearer": [] }],
+				"responses": {}
 			}
 		}
 	},
@@ -141,18 +169,34 @@
 				"properties": {
 					"typeOperation": {
 						"type": "string",
+						"enum": ["income", "expense"],
 						"description": "Transactions type"
 					},
 					"category": {
 						"type": "string",
 						"description": "Transactions category"
 					},
+					"comment": {
+						"type": "string",
+						"description": "Transactions comment"
+					},
 
 					"amount": {
 						"type": "number",
 						"description": "Sum of transaction "
+					},
+					"date": {
+						"type": "string",
+						"description": "Date of transaction "
 					}
 				}
+			}
+		},
+		"securitySchemes": {
+			"Bearer": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
 			}
 		}
 	}

@@ -27,6 +27,14 @@ const transactionSchema = new Schema(
 			required: [true, "Sum is required"],
 			// default: null,
 		},
+		month: {
+			type: String,
+			default: null,
+		},
+		year: {
+			type: String,
+			default: null,
+		},
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: "user",
@@ -46,6 +54,6 @@ const addSchema = Joi.object({
 	sum: Joi.number().required(),
 });
 
-const Transaction = model("transaction", transactionSchema);
+const Transaction = model("transactions", transactionSchema);
 
 module.exports = { Transaction, addSchema };
