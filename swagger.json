@@ -186,7 +186,7 @@
 						"description": "Sum of transaction "
 					},
 					"date": {
-						"type": "string",
+						"type": "number",
 						"description": "Date of transaction "
 					}
 				}
