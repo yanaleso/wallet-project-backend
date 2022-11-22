@@ -18,6 +18,10 @@ const transactionSchema = new Schema(
 			type: String,
 			default: "",
 		},
+		date: {
+			type: String,
+			default: new Date(),
+		},
 		sum: {
 			type: Number,
 			required: [true, "Sum is required"],
@@ -34,9 +38,11 @@ const transactionSchema = new Schema(
 transactionSchema.post("save", handleSaveErrors);
 
 const addSchema = Joi.object({
-	type: Joi.string().required(),
+	typeOperation: Joi.string().required(),
 	category: Joi.string().required(),
 	comment: Joi.string(),
+	date: Joi.string(),
+	amount: Joi.number().required(),
 	sum: Joi.number().required(),
 });
 
