@@ -10,7 +10,7 @@ const add = async (req, res, next) => {
 		const { typeOperation, amount } = req.body;
 		console.log("amount", amount);
 
-		if (typeOperation === "expense") {
+		if (typeOperation === "income") {
 			req.body.category = "Regular Income";
 		}
 		const sum = typeOperation === "income" ? amount : -amount;
