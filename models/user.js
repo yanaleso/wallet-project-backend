@@ -16,6 +16,10 @@ const userSchema = new Schema(
 			minlength: 6,
 			required: [true, "Password is required"],
 		},
+		firstName: {
+			type: String,
+		},
+
 		token: {
 			type: String,
 			default: null,

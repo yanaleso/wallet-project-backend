@@ -2,10 +2,14 @@ const { Transaction } = require("../../models/transaction");
 const { ObjectId } = require("mongoose").Types;
 
 const getStatistics = async (req, res, next) => {
+	const fullYear = false;
 	try {
 		const _id = req.userId;
 		let { month = null, year = null } = req.query;
-		if (!month && year) month = 0;
+		if (!month && year) {
+			month = 0;
+			fullYear = true;
+		}
 		if (month && !year) year = "2022";
 		const timestamps =
 			(month === null) & (year === null)
