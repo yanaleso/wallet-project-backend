@@ -84,7 +84,24 @@
 			"get": {
 				"tags": ["Transactions"],
 				"summary": "Get user's transactions",
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"type": "string",
+						"description": "page of transaction",
+						"example": "1"
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"type": "string",
+						"description": "limit of transaction",
+						"example": "5"
+					}
+				],
 				"security": [{ "Bearer": [] }],
 
 				"responses": {}
