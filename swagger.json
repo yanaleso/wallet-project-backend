@@ -111,7 +111,9 @@
 			"get": {
 				"tags": ["Transactions"],
 				"summary": "Get categories of transactions",
-				"parameters": []
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"responses": {}
 			}
 		},
 		"/transactions/statistics": {
