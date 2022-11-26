@@ -37,11 +37,19 @@ const sigUpInSchema = Joi.object({
 		// .pattern(emailRegexp)
 		.required(),
 	password: Joi.string().min(6).required(),
+	firstName: Joi.string().required(),
+});
+
+const logInShema = Joi.object({
+	email: Joi.string()
+		// .pattern(emailRegexp)
+		.required(),
+	password: Joi.string().min(6).required(),
 });
 
 const schemas = {
 	register: sigUpInSchema,
-	logIn: sigUpInSchema,
+	logIn: logInShema,
 };
 
 const User = model("users", userSchema);
