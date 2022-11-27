@@ -2,8 +2,8 @@ const { User } = require("../../models/user");
 const { createError } = require("../../helpers/createError");
 
 const current = async (req, res, next) => {
-  const { _id  } = req.user;
-  const user = await User.findById(_id);
+  const { userId } = req;
+  const user = await User.findById(userId);
   
   if (!user) {
     throw createError(401, "Token is required");
