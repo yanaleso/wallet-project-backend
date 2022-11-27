@@ -48,7 +48,7 @@
 						"content": {}
 					},
 					"409": {
-						"description": "Provided emeil already exists",
+						"description": "Provided email already exists",
 						"content": {}
 					},
 					"500": {
