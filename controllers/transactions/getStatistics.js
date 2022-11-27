@@ -1,26 +1,31 @@
 const { Transaction } = require("../../models/transaction");
+const getMinAndMaxTimestamps = require("../../utils/getMinAndMaxTimestamps");
 const { ObjectId } = require("mongoose").Types;
 
 const getStatistics = async (req, res, next) => {
-	const fullYear = false;
+	let fullYear = false;
 	try {
 		const _id = req.userId;
 		let { month = null, year = null } = req.query;
 		if (!month && year) {
-			month = 0;
 			fullYear = true;
 		}
 		if (month && !year) year = "2022";
-		const timestamps =
-			(month === null) & (year === null)
-				? 0
-				: new Date(year, month, 1, 2).getTime();
-		console.log("timestamps", timestamps);
-
+		const { minTimestamps, maxTimestamps } = getMinAndMaxTimestamps({
+			month,
+			year,
+		});
+		console.log(
+			"minTimestamps:",
+			new Date(minTimestamps),
+			"maxTimestamps:",
+			new Date(maxTimestamps)
+		);
+		console.log("loggin");
 		const statistics = await Transaction.aggregate()
 			.match({
 				owner: ObjectId(_id),
-				timestamps: { $gte: timestamps },
+				timestamps: { $gte: minTimestamps, $lte: maxTimestamps },
 			})
 			.group({
 				_id: "$category",
