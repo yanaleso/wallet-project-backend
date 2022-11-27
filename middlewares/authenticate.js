@@ -9,6 +9,7 @@ const authenticate = async (req, res, next) => {
 		const [bearer, token] = authorization.split(" ");
 		if (bearer !== "Bearer" || !token) throw RequestError(401);
 		const { id } = jwt.verify(token, SECRET_KEY);
+		
 		req.userId = id;
 		next();
 	} catch (error) {

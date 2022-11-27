@@ -7,7 +7,7 @@ const { SECRET_KEY } = process.env;
 
 
 const register = async (req, res, next) => {
-	const { email, password } = req.body;
+	const { email, password,firstName } = req.body;
 	const user = await User.findOne({ email });
 	if (user) {
 		throw createError(409, "email in use");
@@ -17,6 +17,7 @@ const register = async (req, res, next) => {
 	const result = await User.create({
 		email,
 		password: hash,
+		firstName,
 		balance: 0,
 	});
 
@@ -28,7 +29,11 @@ const register = async (req, res, next) => {
 	await User.findByIdAndUpdate(result._id, { token });
 
 	res.status(201).json({
-		email: result.email,
+		user:{
+			email: result.email,
+			firstName,
+			balance: result.balance
+		},
 		token,
 	});
 };
