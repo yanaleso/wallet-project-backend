@@ -5,9 +5,12 @@ const getAllTransactions = async (req, res, next) => {
 		const id = req.userId;
 		const { page = 1, limit = 5 } = req.query;
 		const skip = (page - 1) * limit;
-		const transactions = await Transaction.find({
-			owner: id,
-		})
+		const transactions = await Transaction.find(
+			{
+				owner: id,
+			},
+			"-updatedAt"
+		)
 			.sort({ timestamps: -1, createdAt: -1 })
 			.skip(skip)
 			.limit(limit);
