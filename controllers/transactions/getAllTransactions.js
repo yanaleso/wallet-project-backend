@@ -1,4 +1,5 @@
 const { Transaction } = require("../../models/transaction");
+const { User } = require("../../models/user");
 
 const getAllTransactions = async (req, res, next) => {
 	try {
@@ -14,7 +15,9 @@ const getAllTransactions = async (req, res, next) => {
 			.sort({ timestamps: -1, createdAt: -1 })
 			.skip(skip)
 			.limit(limit);
-		res.json(transactions);
+		const { balance: userBalance } = await User.findById(id);
+		console.log("userBalance", userBalance);
+		res.json({ transactions, userBalance });
 	} catch (error) {
 		next(error);
 	}
