@@ -125,6 +125,29 @@
 				}
 			}
 		},
+		"/users/current": {
+			"get": {
+				"tags": ["Auth"],
+				"summary": "Get current user",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetCurrentUserResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					}
+				}
+			}
+		},
 		"/transactions": {
 			"post": {
 				"tags": ["Transactions"],
@@ -346,6 +369,17 @@
 					}
 				}
 			},
+			"GetCurrentUserResponse": {
+				"type": "object",
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "User's email",
+						"format": "email"
+					}
+				}
+			},
+
 			"TransactionsRegistrationRequest": {
 				"type": "object",
 				"required": ["typeOperation", "category", "typeOperation"],
