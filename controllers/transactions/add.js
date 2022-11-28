@@ -1,5 +1,6 @@
 const { Transaction, addSchema } = require("../../models/transaction");
 const { User } = require("../../models/user");
+const { RequestError } = require("../../utils");
 
 const add = async (req, res, next) => {
 	try {
@@ -8,13 +9,13 @@ const add = async (req, res, next) => {
 		const _id = req.userId;
 		const timestamps = Number(new Date(req.body.date).getTime());
 		const { typeOperation, amount } = req.body;
-		console.log("amount", amount);
 
 		if (typeOperation === "income") {
 			req.body.category = "Regular Income";
 		}
 		const sum = typeOperation === "income" ? amount : -amount;
 		const user = await User.findById(_id);
+		if (!user) throw RequestError(404);
 		if (user.balance === undefined) user.balance = 0;
 		const balance = user.balance + sum;
 		const newUser = { ...user._doc, balance };
