@@ -15,8 +15,9 @@ const getAllTransactions = async (req, res, next) => {
 			.sort({ timestamps: -1, createdAt: -1 })
 			.skip(skip)
 			.limit(limit);
-		const { balance: userBalance } = await User.findById(id);
-		console.log("userBalance", userBalance);
+		const user = await User.findById(id);
+		const userBalance = user ? user.balance : null;
+
 		res.json({ transactions, userBalance });
 	} catch (error) {
 		next(error);
