@@ -1,0 +1,551 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"version": "1.0",
+		"title": "Wallet",
+		"description": "description of the methods"
+	},
+	"consumes": ["application/json"],
+	"produces": ["application/json"],
+	"servers": [
+		{ "url": "https://wallet-project.onrender.com/api" },
+		{ "url": "http://localhost:3000/api" }
+	],
+	"tags": [
+		{ "name": "Auth", "description": "Authorization endpoints" },
+		{ "name": "Transactions", "description": "Transactions endpoints" }
+	],
+	"paths": {
+		"/users/register": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "Signup user",
+				"parameters": [],
+				"requestBody": {
+					"description": "Registration's object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserRegistrationRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserRegistrationResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request (Invalid request body)",
+						"content": {}
+					},
+					"409": {
+						"description": "Provided email already exists",
+						"content": {}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/users/login": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "Login user",
+				"parameters": [],
+				"requestBody": {
+					"description": "Registration's object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserLoginRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserRegistrationResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request (Invalid request body)",
+						"content": {}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"404": {
+						"description": "Not Found (Bad login or password)",
+						"content": {}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/users/logout": {
+			"get": {
+				"tags": ["Auth"],
+				"summary": "Logout user",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {}
+					},
+					"400": {
+						"description": "Bad Request (Invalid request body)",
+						"content": {}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/users/current": {
+			"get": {
+				"tags": ["Auth"],
+				"summary": "Get current user",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetCurrentUserResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/transactions": {
+			"post": {
+				"tags": ["Transactions"],
+				"summary": "Сreating a transaction",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"requestBody": {
+					"description": "Registration's object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TransactionsRegistrationRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TransactionsRegistrationResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request (Invalid request body)",
+						"content": {}
+					},
+					"401 ": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {}
+					}
+				}
+			},
+			"get": {
+				"tags": ["Transactions"],
+				"summary": "Get user's transactions",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"type": "string",
+						"description": "page of transaction",
+						"example": "1"
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"type": "string",
+						"description": "limit of transaction",
+						"example": "5"
+					}
+				],
+				"security": [{ "Bearer": [] }],
+
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetTransactionsResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request (Invalid request body)",
+						"content": {}
+					},
+					"401 ": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/transactions/categories": {
+			"get": {
+				"tags": ["Transactions"],
+				"summary": "Get categories of transactions",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetTransactionsCategories"
+								}
+							}
+						}
+					},
+
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/transactions/statistics": {
+			"get": {
+				"tags": ["Transactions"],
+				"summary": "Get statistics of transactions",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "month",
+						"required": false,
+						"type": "string",
+						"description": "Month of transaction (string 0-11)",
+						"example": "3"
+					},
+					{
+						"in": "query",
+						"name": "year",
+						"required": false,
+						"type": "string",
+						"description": "Year of transaction (string)",
+						"example": "2021"
+					}
+				],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"201": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetTransactionsStatistics"
+								}
+							}
+						}
+					},
+
+					"401": {
+						"description": "Unauthorized",
+						"content": {}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"UserRegistrationRequest": {
+				"type": "object",
+				"required": ["email", "password", "firstName"],
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "User's email",
+						"format": "email"
+					},
+					"password": {
+						"type": "string",
+						"description": "User's password",
+						"example": "qwerty123"
+					},
+
+					"firstName": {
+						"type": "string",
+						"description": "User's first name"
+					}
+				}
+			},
+			"UserRegistrationResponse": {
+				"type": "object",
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "User's email",
+						"format": "email"
+					},
+					"token": {
+						"type": "string",
+						"description": "User's token",
+						"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODM3NGJkYTk5YmRlOWI5OGU3ZThlZCIsImlhdCI6MTY2OTU1OTQ4NSwiZXhwIjoxNjcwNzY5MDg1fQ.v6aRI9E-cDc2C9xW2WufV3P7pwVSDQrQKZ26jNGNpjk"
+					}
+				}
+			},
+			"UserLoginRequest": {
+				"type": "object",
+				"required": ["email", "password"],
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "User's email",
+						"format": "email"
+					},
+					"password": {
+						"type": "string",
+						"description": "User's password",
+						"example": "qwerty123"
+					}
+				}
+			},
+			"GetCurrentUserResponse": {
+				"type": "object",
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "User's email",
+						"format": "email"
+					}
+				}
+			},
+
+			"TransactionsRegistrationRequest": {
+				"type": "object",
+				"required": ["typeOperation", "category", "typeOperation"],
+				"properties": {
+					"typeOperation": {
+						"type": "string",
+						"enum": ["income", "expense"],
+						"description": "Transactions type"
+					},
+					"category": {
+						"type": "string",
+						"description": "Transactions category"
+					},
+					"comment": {
+						"type": "string",
+						"description": "Transactions comment"
+					},
+
+					"amount": {
+						"type": "number",
+						"description": "Sum of transaction "
+					},
+					"date": {
+						"type": "string",
+						"description": "Date of transaction "
+					}
+				}
+			},
+			"TransactionsRegistrationResponse": {
+				"type": "object",
+				"properties": {
+					"typeOperation": {
+						"type": "string",
+						"enum": ["income", "expense"],
+						"description": "Transactions type"
+					},
+					"category": {
+						"type": "string",
+						"description": "Transactions category",
+						"example": "Education"
+					},
+					"comment": {
+						"type": "string",
+						"description": "Transactions comment",
+						"example": "Book"
+					},
+					"date": {
+						"type": "string",
+						"description": "Date of transaction ",
+						"example": "Tue Nov 22 2022 12:58:30 GMT+0200"
+					},
+					"timestamps": {
+						"type": "number",
+						"description": "getTime() of transaction ",
+						"example": "1669586400000"
+					},
+
+					"amount": {
+						"type": "number",
+						"description": "Sum of transaction ",
+						"example": "100"
+					},
+					"balanceAfterTransaction": {
+						"type": "string",
+						"description": "Balance after transaction ",
+						"example": "-50"
+					},
+					"owner": {
+						"type": "string",
+						"description": "Transaction's owner (id)",
+						"example": "63837d687f0d6aafc551ffcc"
+					},
+					"createdAt": {
+						"type": "string",
+						"description": "Transaction's creating date",
+						"example": "2022-11-27T15:08:24.572Z"
+					}
+				}
+			},
+			"GetTransactionsResponse": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"description": "Transactions id",
+						"example": "6383803a9e42a3a435da9708"
+					},
+					"typeOperation": {
+						"type": "string",
+						"enum": ["income", "expense"],
+						"description": "Transactions type"
+					},
+					"category": {
+						"type": "string",
+						"description": "Transactions category",
+						"example": "Education"
+					},
+					"comment": {
+						"type": "string",
+						"description": "Transactions comment",
+						"example": "Book"
+					},
+					"date": {
+						"type": "string",
+						"description": "Date of transaction ",
+						"example": "Tue Nov 22 2022 12:58:30 GMT+0200"
+					},
+					"timestamps": {
+						"type": "number",
+						"description": "getTime() of transaction ",
+						"example": "1669586400000"
+					},
+
+					"amount": {
+						"type": "number",
+						"description": "Sum of transaction ",
+						"example": "100"
+					},
+					"balanceAfterTransaction": {
+						"type": "string",
+						"description": "Balance after transaction ",
+						"example": "-50"
+					},
+					"owner": {
+						"type": "string",
+						"description": "Transaction's owner (id)",
+						"example": "63837d687f0d6aafc551ffcc"
+					},
+					"createdAt": {
+						"type": "string",
+						"description": "Transaction's creating date",
+						"example": "2022-11-27T15:08:24.572Z"
+					}
+				}
+			},
+			"GetTransactionsCategories": {
+				"type": "string",
+				"example": "[Education, Transport, Children, Regular Income]"
+			},
+			"GetTransactionsStatistics": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"description": "Category name",
+						"example": "Regular Income"
+					},
+					"totalSum": {
+						"type": "number",
+						"description": "Total sum of category",
+						"example": "2500"
+					},
+					"type": {
+						"type": "string",
+						"description": "Category type",
+						"example": "income"
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"Bearer": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	}
+}
