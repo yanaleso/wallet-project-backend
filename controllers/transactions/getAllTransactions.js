@@ -16,7 +16,6 @@ const getAllTransactions = async (req, res, next) => {
 			.skip(skip)
 			.limit(limit);
 		const user = await User.findById(id);
-		console.log("user", user);
 		const userBalance = user ? user.balance : null;
 
 		res.json({ transactions, userBalance });

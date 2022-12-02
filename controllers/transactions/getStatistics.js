@@ -15,13 +15,7 @@ const getStatistics = async (req, res, next) => {
 			month,
 			year,
 		});
-		console.log(
-			"minTimestamps:",
-			new Date(minTimestamps),
-			"maxTimestamps:",
-			new Date(maxTimestamps)
-		);
-		console.log("loggin");
+
 		const statistics = await Transaction.aggregate()
 			.match({
 				owner: ObjectId(_id),
